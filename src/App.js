@@ -69,7 +69,7 @@ export default function App() {
         {filterTodos.map((todo, i) => {
           return (
             <Li key={i}>
-              <Task>
+              <Task isCompleted={todo.isCompleted}>
                 <input type='checkbox' checked={todo.isCompleted} onChange={() => correctCompleting(i)}></input>
                 <div>{todo.value}</div>
               </Task>
@@ -185,7 +185,8 @@ const Task = styled.div`
   flex-direction: row;
   justify-content: start;
   column-gap: 10px;
-  div{
+
+  div {
     text-decoration: ${(props) => (props.isCompleted ? "line-through" : "none")};
   }
 
@@ -228,7 +229,6 @@ const ButtonInFooter = styled.button`
         cursor: pointer; 
     }
 `
-
 
 const ButtonClearCompleted = styled.button`
     padding: 5px;
