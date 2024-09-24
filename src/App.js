@@ -9,6 +9,7 @@ export default function App() {
   const [param, setParam] = useState('All');
 
   let countOfTodos = 0;
+  let isActive = false;
 
   function takeTodo(e) {
     if (e.key === 'Enter' && todoValue) {
@@ -36,8 +37,8 @@ export default function App() {
     const newTodos = [...todos];
     let a = newTodos.length;
     let b = 0;
-    while (b != a) {
-      if (newTodos[b].isCompleted == true) {
+    while (b !== a) {
+      if (newTodos[b].isCompleted === true) {
         newTodos.splice(b, 1);
         a--;
       } else {
@@ -67,11 +68,13 @@ export default function App() {
       <>
         {filterTodos.map((todo, i) => {
           return (
-            <li>
-              <input type='checkbox' checked={todo.isCompleted} onChange={() => correctCompleting(i)}></input>
-              <div>{todo.value}</div>
-              <button onClick={() => clear(i)}>X</button>
-            </li>
+            <Li key={i}>
+              <Task>
+                <input type='checkbox' checked={todo.isCompleted} onChange={() => correctCompleting(i)}></input>
+                <div>{todo.value}</div>
+              </Task>
+              <XButton onClick={() => clear(i)}>X</XButton>
+            </Li>
           )
         })
         }
@@ -80,10 +83,10 @@ export default function App() {
   }
   return (
     <Body>
-      <Container>
-        <Title>
+      <Title>
           todos
         </Title>
+      <Container>
         <InputField>
           <input type='text' value={todoValue}
             onChange={(e) => { setTodoValue(e.target.value) }}
@@ -97,13 +100,13 @@ export default function App() {
           <div>
             {countOfTodos = filterTodos.length} items left
           </div>
+          <FooterButtons>
+            <ButtonInFooter onClick={() => setParam('All')}>All</ButtonInFooter>
+            <ButtonInFooter onClick={() => {setParam('Active');}}>Active</ButtonInFooter>
+            <ButtonInFooter onClick={() => setParam('Completed')}>Completed</ButtonInFooter>
+          </FooterButtons>
           <div>
-            <button onClick={() => setParam('All')}>All</button>
-            <button onClick={() => setParam('Active')}>Active</button>
-            <button onClick={() => setParam('Completed')}>Completed</button>
-          </div>
-          <div>
-            <button onClick={() => clearAll()}>Clear completed</button>
+            <ButtonClearCompleted onClick={() => clearAll()}>Clear completed</ButtonClearCompleted>
           </div>
         </FooterBody>
       </Container>
@@ -111,54 +114,135 @@ export default function App() {
   );
 }
 
+
 const Body = styled.body`
   * {
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     border: 0;
+    box-sizing: border-box;
   }
-
   background-color: #f5f5f5;
-	font-family: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	line-height: 1.4em;
-	color: #111111;
-	font-weight: 300;
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: normal;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height:100vh;
 `
 
 const Container = styled.div`
   display: flex;
-  margin: 0 auto;
-  padding: 0;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
   max-width: 550px;
+  width: 100%;
 `
 
 const Title = styled.h1`
   display: flex;
   justify-content: center;
   color: #b83f45;
+  margin-top: 40px;
+  font-size: 120px;
+  width: 100%;
 `
 
 const InputField = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
   input{
-    width: 100%;
+    width: 550px;
+    height: 50px;
+    padding-left: 7px;
   } 
 `
 const TodoBody = styled.ul`
     display: flex;
-    margin: 0 auto;
-    padding: 0;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
+`
+const Li = styled.li`
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid transparent;
+  border-color: #f5f5f5;
+`
+
+const Task = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  input{
+    text-decoration: ${(props) => (props.checked ? "line-through" : "none")};
+  }
+  column-gap: 10px;
+`
+const XButton = styled.button`
+  opacity: 0;
+  background-color: white;
+  padding: 3px;
+   &:hover{
+      opacity: 1;
+      cursor: pointer; 
+    }
 `
 
 const FooterBody = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  padding: 5px;
+`
+
+const FooterButtons = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+`
+
+const ButtonInFooter = styled.button`
+  padding: 5px;
+  background-color: ${(props) => (props.active ? "b83f45" : "white")};
+    &:hover {
+        background-color: #FFFAFA;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        border-color: #b83f45;
+        cursor: pointer; 
+    }
+    &:active{
+        background: #FFFAFA;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        border-color: #b83f45;
+        border: 1px;
+    }
+`
+
+
+const ButtonClearCompleted = styled.button`
+    padding: 5px;
+  background-color: ${(props) => (props.active ? "b83f45" : "white")};
+    &:hover {
+        background-color: #FFFAFA;
+        text-decoration: underline;
+        cursor: pointer; 
+    }
+    &:active{
+        background: #FFFAFA;
+    }
 `
