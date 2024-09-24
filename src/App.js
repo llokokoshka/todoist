@@ -1,16 +1,83 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-let numberOfItems = 2;
+
 
 export default function App() {
- const [todo, setTodo] = useState('');
+  const [todos, setTodo] = useState([]);
+  const [todoValue, setTodoValue] = useState('');
+  const [param, setParam] = useState('All');
 
-  function takeTodo(e){
-    setTodo( 
-      e.target.value,);
+  let countOfTodos = 0;
+
+  function takeTodo(e) {
+    if (e.key === 'Enter' && todoValue) {
+      setTodo([...todos, {
+        value: todoValue,
+        isCompleted: false
+      }]);
+      setTodoValue('');
+    }
+  };
+
+  function correctCompleting(i) {
+    const newTodos = [...todos];
+    newTodos[i].isCompleted = !newTodos[i].isCompleted;
+    setTodo(newTodos)
   }
 
+  function clear(i) {
+    const newTodos = [...todos];
+    newTodos.splice(i, 1);
+    setTodo(newTodos);
+  }
+
+  function clearAll() {
+    const newTodos = [...todos];
+    let a = newTodos.length;
+    let b = 0;
+    while (b != a) {
+      if (newTodos[b].isCompleted == true) {
+        newTodos.splice(b, 1);
+        a--;
+      } else {
+        b++;
+      }
+    }
+    setTodo(newTodos);
+  }
+
+  const filterTodos = todos.filter((todo) => {
+    switch (param) {
+      case 'All':
+        return todo;
+        break;
+      case 'Active':
+        return !todo.isCompleted;
+        break;
+      case 'Completed':
+        return todo.isCompleted;
+        break;
+    }
+    return todo;
+  });
+
+  function LiOfList() {
+    return (
+      <>
+        {filterTodos.map((todo, i) => {
+          return (
+            <li>
+              <input type='checkbox' checked={todo.isCompleted} onChange={() => correctCompleting(i)}></input>
+              <div>{todo.value}</div>
+              <button onClick={() => clear(i)}>X</button>
+            </li>
+          )
+        })
+        }
+      </>
+    )
+  }
   return (
     <Body>
       <Container>
@@ -18,25 +85,25 @@ export default function App() {
           todos
         </Title>
         <InputField>
-          <input type='text' value={todo} onChange={takeTodo} placeholder='What needs to be done?'></input>
+          <input type='text' value={todoValue}
+            onChange={(e) => { setTodoValue(e.target.value) }}
+            onKeyDown={takeTodo}
+            placeholder='What needs to be done?'></input>
         </InputField>
         <TodoBody>
-
-          <input type="checkbox"></input>
-          <div>{todo}</div>
-          <button>X</button>
-      </TodoBody>
+          <LiOfList />
+        </TodoBody>
         <FooterBody>
           <div>
-            {numberOfItems} items left
+            {countOfTodos = filterTodos.length} items left
           </div>
           <div>
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
+            <button onClick={() => setParam('All')}>All</button>
+            <button onClick={() => setParam('Active')}>Active</button>
+            <button onClick={() => setParam('Completed')}>Completed</button>
           </div>
           <div>
-            <button>Clear completed</button>
+            <button onClick={() => clearAll()}>Clear completed</button>
           </div>
         </FooterBody>
       </Container>
@@ -80,7 +147,7 @@ const InputField = styled.div`
     width: 100%;
   } 
 `
-const TodoBody = styled.div`
+const TodoBody = styled.ul`
     display: flex;
     margin: 0 auto;
     padding: 0;
