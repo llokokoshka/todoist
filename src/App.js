@@ -9,7 +9,6 @@ export default function App() {
   const [param, setParam] = useState('All');
 
   let countOfTodos = 0;
-  let isActive = false;
 
   function takeTodo(e) {
     if (e.key === 'Enter' && todoValue) {
