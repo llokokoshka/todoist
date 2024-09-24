@@ -101,9 +101,9 @@ export default function App() {
             {countOfTodos = filterTodos.length} items left
           </div>
           <FooterButtons>
-            <ButtonInFooter onClick={() => setParam('All')}>All</ButtonInFooter>
-            <ButtonInFooter onClick={() => {setParam('Active');}}>Active</ButtonInFooter>
-            <ButtonInFooter onClick={() => setParam('Completed')}>Completed</ButtonInFooter>
+            <ButtonInFooter active={param==='All'} onClick={() => setParam('All')}>All</ButtonInFooter>
+            <ButtonInFooter active={param==='Active'} onClick={() => {setParam('Active');}}>Active</ButtonInFooter>
+            <ButtonInFooter active={param==='Completed'} onClick={() => setParam('Completed')}>Completed</ButtonInFooter>
           </FooterButtons>
           <div>
             <ButtonClearCompleted onClick={() => clearAll()}>Clear completed</ButtonClearCompleted>
@@ -184,10 +184,11 @@ const Task = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  input{
-    text-decoration: ${(props) => (props.checked ? "line-through" : "none")};
-  }
   column-gap: 10px;
+  div{
+    text-decoration: ${(props) => (props.isCompleted ? "line-through" : "none")};
+  }
+
 `
 const XButton = styled.button`
   opacity: 0;
@@ -216,20 +217,15 @@ const FooterButtons = styled.div`
 
 const ButtonInFooter = styled.button`
   padding: 5px;
-  background-color: ${(props) => (props.active ? "b83f45" : "white")};
-    &:hover {
+  background-color: white;
+  border: ${(props) => (props.active ? "1px solid #b83f45" : "none")};
+  border-radius: 3px;  
+  &:hover {
         background-color: #FFFAFA;
         border: 1px solid transparent;
-        border-radius: 3px;
+        
         border-color: #b83f45;
         cursor: pointer; 
-    }
-    &:active{
-        background: #FFFAFA;
-        border: 1px solid transparent;
-        border-radius: 3px;
-        border-color: #b83f45;
-        border: 1px;
     }
 `
 
