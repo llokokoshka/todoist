@@ -8,9 +8,15 @@ export default function FooterLine(props) {
         {props.filterTodos.length} items left
       </div>
       <div className='footer-buttons-block'>
-        <button className='footer-button' active={props.filter === 'All'} onClick={() => props.setFilter('All')}>All</button>
-        <button className='footer-button' active={props.filter === 'Active'} onClick={() => props.setFilter('Active')}>Active </button>
-        <button className='footer-button' active={props.filter === 'Completed'} onClick={() => props.setFilter('Completed')}>Completed</button>
+        <button className='footer-button' 
+         style={{ border: (props.filter === 'All') ? "1px solid #b83f45" : "none"}}
+         onClick={() => props.setFilter('All')}>All</button>
+        <button className='footer-button' 
+        style={{ border: (props.filter === 'Active') ? "1px solid #b83f45" : "none"}}
+        onClick={() => props.setFilter('Active')}>Active </button>
+        <button className='footer-button' 
+        style={{ border: (props.filter === 'Completed') ? "1px solid #b83f45" : "none"}}
+        onClick={() => props.setFilter('Completed')}>Completed</button>
       </div>
       <div>
         <button className='clean-button' onClick={() => props.clearAllCompletedToDos()}>Clear completed</button>
@@ -42,29 +48,23 @@ const FooterLineBody  = styled.div`
     padding-top: 5px;
     padding-bottom: 5px;
     background-color: white;
-    border: ${(props) => (props.active ? "1px solid #b83f45" : "none")};
     border-radius: 3px;  
-    &:hover {
-          background-color: #FFFAFA;
-          border: 1px solid transparent;
-          
-          border-color: #b83f45;
-          cursor: pointer; 
-      }
   }
+  
+  .footer-button:hover{
+    background-color: #ffe7e7;
+    cursor: pointer; 
+  }
+
   .clean-button{
     padding-left: 5px;
     padding-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: ${(props) => (props.active ? "b83f45" : "white")};
+    background-color: white;
     &:hover {
-        background-color: #FFFAFA;
         text-decoration: underline;
         cursor: pointer; 
-    }
-    &:active{
-        background: #FFFAFA;
     }
   }
 `

@@ -7,12 +7,12 @@ export default function ToDoLine(props) {
   const [editValue, setEditValue] = useState(props.todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
-  function IsEditing(){
+  function IsEditing() {
     setIsEdit(true);
   }
 
-  function takeEditingToDo(e){
-    if (e.key === 'Enter'){
+  function takeEditingToDo(e) {
+    if (e.key === 'Enter') {
       props.updateToDo(props.index, editValue);
       setIsEdit(false);
     }
@@ -22,16 +22,16 @@ export default function ToDoLine(props) {
     <ToDoLineBody key={props.index}>
       <div className='todo-body' isCompleted={props.todo.isCompleted}>
         <input type='checkbox' checked={props.todo.isCompleted} onChange={() => props.changeToDoCompleted(props.index)}></input>
-       { isEdit ? ( <input type='text' value={editValue} 
-                     onChange={(e) => { setEditValue(e.target.value) }}
-                      onKeyDown={takeEditingToDo}
-                      autoFocus
-                      onBlur={()=>setIsEdit(false)}></input>):
-        (<div className='todo-body__div' 
-          onDoubleClick={IsEditing}>
-          {props.todo.value}</div>
-        )
-       }
+        {isEdit ? (<input type='text' value={editValue}
+          onChange={(e) => { setEditValue(e.target.value) }}
+          onKeyDown={takeEditingToDo}
+          autoFocus
+          onBlur={() => setIsEdit(false)}></input>) :
+          (<div className='todo-body__div' style={{textDecoration: props.todo.isCompleted ? "line-through" : "none"}}
+            onDoubleClick={IsEditing}>
+            {props.todo.value}</div>
+          )
+        }
       </div>
       <button className='closed-button' onClick={() => props.deleteToDo(props.index)}>X</button>
     </ToDoLineBody>
@@ -60,10 +60,13 @@ const ToDoLineBody = styled.li`
     padding-top: 3px;
     padding-bottom: 3px;
    &:hover{
-      opacity: 1;
       cursor: pointer; 
     }
   }
+
+  &:hover .closed-button{
+      opacity: 1;
+    }
 
   .todo-body{
     display: flex;
@@ -75,7 +78,6 @@ const ToDoLineBody = styled.li`
   }
 
   .todo-body__div{
-    text-decoration: ${(props) => (props.isCompleted ? "line-through" : "none")};
     text-align: left;
   }
 
