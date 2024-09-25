@@ -3,8 +3,6 @@ import { useState } from 'react';
 import ToDoLine from './components/ToDoLine';
 import FooterLine from './components/FooterLine';
 
-
-
 export default function App() {
   const [todos, setTodo] = useState([]);
   const [todoValue, setTodoValue] = useState('');
@@ -60,7 +58,6 @@ export default function App() {
     }
   });
 
-
   return (
     <Body>
       <Title>
@@ -75,22 +72,22 @@ export default function App() {
         </InputField>
         <TodoBody>
           {filterTodos.map((todo, index) => {
-           return(
-            <ToDoLine
-              index={index}
-              todo={todo}
-              correctCompleting={correctCompleting}
-              clear={clear}
-            />
-           ) 
+            return (
+              <ToDoLine
+                index={index}
+                todo={todo}
+                correctCompleting={correctCompleting}
+                clear={clear}
+              />
+            )
           })}
         </TodoBody>
-          <FooterLine 
-            filterTodos={filterTodos}
-            param={param}
-            setParam={setParam}
-            clearAll={clearAll}
-          />
+        <FooterLine
+          filterTodos={filterTodos}
+          param={param}
+          setParam={setParam}
+          clearAll={clearAll}
+        />
       </Container>
     </Body>
   );
