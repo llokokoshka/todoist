@@ -2,12 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function FooterLine(props) {
+  
 
-
-  const countOfNecessaryItems = props.filterTodos.filter((todo)=>{
-      if (props.filter === 'All') {
-        return !todo.isCompleted;
-      } else return todo;
+  const countOfNecessaryItems = props.todos.filter((todo)=>{
+    return !todo.isCompleted;
   })
 
   return (
@@ -39,7 +37,7 @@ const FooterLineBody  = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 5px;
+  padding: 7px  !important; 
   @media screen and (max-width: 390px){
     flex-direction: column;
     row-gap: 10px;
@@ -51,10 +49,7 @@ const FooterLineBody  = styled.div`
   }
 
   .footer-button{
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
     background-color: white;
     border-radius: 3px;  
   }
@@ -65,10 +60,7 @@ const FooterLineBody  = styled.div`
   }
 
   .clean-button{
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
     background-color: white;
     &:hover {
         text-decoration: underline;

@@ -17,11 +17,11 @@ export default function ToDoLine(props) {
       setIsEdit(false);
     }
   }
-
+             
   return (
     <ToDoLineBody key={props.index}>
       <div className='todo-body' isCompleted={props.todo.isCompleted}>
-        <input type='checkbox' checked={props.todo.isCompleted} onChange={() => props.changeToDoCompleted(props.index)}></input>
+        <input className='todo-body__checkbox' type='checkbox' checked={props.todo.isCompleted} onChange={() => props.changeToDoCompleted(props.index)}></input>
         {isEdit ? (<input type='text' value={editValue}
           onChange={(e) => { setEditValue(e.target.value) }}
           onKeyDown={takeEditingToDo}
@@ -45,20 +45,12 @@ const ToDoLineBody = styled.li`
   align-items: flex-start;
   flex-direction: row;
   width: 100%;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border: 1px solid transparent;
-  border-color: #f5f5f5;
+  border: 1px solid #f5f5f5 !important;
 
   .closed-button{
     opacity: 0;
     background-color: white;
-    padding-left: 3px;
-    padding-right: 3px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding: 3px !important;
    &:hover{
       cursor: pointer; 
     }
@@ -74,7 +66,28 @@ const ToDoLineBody = styled.li`
     justify-content: start;
     align-items: center;
     column-gap: 10px;
+    padding: 7px !important;
     width: 100%;
+  }
+
+  .todo-body__checkbox{
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 50%;
+    
+    /* position; */
+    width: 25px;
+    height: 25px;
+    border: 1px solid #b83f45;
+    cursor: pointer;
+  }
+  .todo-body__checkbox:checked{
+    background-color:#ffe7e7;
+  }
+  .todo-body__checkbox:checked::after{
+    content: '✓';
+    position: absolute;
+    transform: scale(1.5) translate(33%, 15%);
   }
 
   .todo-body__div{

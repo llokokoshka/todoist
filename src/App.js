@@ -56,6 +56,15 @@ export default function App() {
     }
   });
 
+  function checkedAllToDos(){
+    const areAllCompleted = todos.every(todo =>todo.isCompleted);
+    const newArrTodos = todos.map(todo =>({
+      ...todo,
+      isCompleted: !areAllCompleted,
+    }))
+    setTodo(newArrTodos);
+  }
+
   return (
     <PageWrapper>
       <h1 className='title' >
@@ -63,6 +72,7 @@ export default function App() {
       </h1>
       <div className='container'>
         <div className='todo-input'>
+          <div className='todo-input__arrow' onClick={checkedAllToDos}>✔</div>
           <input className='todo-input__field' type='text' value={todoValue}
             onChange={(e) => { setTodoValue(e.target.value) }}
             onKeyDown={takeTodo}
@@ -82,6 +92,7 @@ export default function App() {
           })}
         </ul>
         <FooterLine
+          todos={todos}
           filterTodos={filterTodos}
           filter={filter}
           setFilter={setFilter}
@@ -118,6 +129,7 @@ const PageWrapper = styled.body`
     background-color: white;
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
     max-width: 550px;
+    /* padding: 0 10px 5px; */
     width: 100%;
     @media screen and (max-width: 390px){
       max-width: 260px;
@@ -139,9 +151,18 @@ const PageWrapper = styled.body`
   .todo-input{
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     @media screen and (max-width: 390px){
       max-width: 260px;
+    }
+  }
+
+  .todo-input__arrow{
+    transform: scale(2);
+    margin: 0 15px;
+    &:hover{
+      cursor: pointer; 
     }
   }
 
@@ -156,6 +177,8 @@ const PageWrapper = styled.body`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* padding: 6px 0; */
+    /* gap: 5px; */
     width: 100%; 
   }
 `
