@@ -2,10 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function FooterLine(props) {
+
+
+  const countOfNecessaryItems = props.filterTodos.filter((todo)=>{
+      switch (props.filter){
+        case 'All':
+          return !todo.isCompleted;
+        default:
+          return todo;
+      }
+  })
   return (
     <FooterLineBody>
       <div>
-        {props.filterTodos.length} items left
+        {countOfNecessaryItems.length} items left
       </div>
       <div className='footer-buttons-block'>
         <button className='footer-button' 
