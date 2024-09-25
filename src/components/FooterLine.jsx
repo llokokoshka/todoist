@@ -8,12 +8,12 @@ export default function FooterLine(props) {
         {props.filterTodos.length} items left
       </div>
       <div className='footer-buttons-block'>
-        <button className='footer-button' active={props.param === 'All'} onClick={() => props.setParam('All')}>All</button>
-        <button className='footer-button' active={props.param === 'Active'} onClick={() => props.setParam('Active')}>Active </button>
-        <button className='footer-button' active={props.param === 'Completed'} onClick={() => props.setParam('Completed')}>Completed</button>
+        <button className='footer-button' active={props.filter === 'All'} onClick={() => props.setFilter('All')}>All</button>
+        <button className='footer-button' active={props.filter === 'Active'} onClick={() => props.setFilter('Active')}>Active </button>
+        <button className='footer-button' active={props.filter === 'Completed'} onClick={() => props.setFilter('Completed')}>Completed</button>
       </div>
       <div>
-        <button className='clean-button' onClick={() => props.clearAll()}>Clear completed</button>
+        <button className='clean-button' onClick={() => props.clearAllCompletedToDos()}>Clear completed</button>
       </div>
     </FooterLineBody>
   )
@@ -67,5 +67,4 @@ const FooterLineBody  = styled.div`
         background: #FFFAFA;
     }
   }
-
 `

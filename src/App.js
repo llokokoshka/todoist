@@ -6,7 +6,7 @@ import FooterLine from './components/FooterLine';
 export default function App() {
   const [todos, setTodo] = useState([]);
   const [todoValue, setTodoValue] = useState('');
-  const [param, setParam] = useState('All');
+  const [filter, setFilter] = useState('All');
 
   function takeTodo(e) {
     if (e.key === 'Enter' && todoValue) {
@@ -18,35 +18,33 @@ export default function App() {
     }
   };
 
-  function correctCompleting(i) {
+  function updateToDo(index, newValueOfTodo){
+    const newTodos =[...todos];
+    newTodos[index].value = newValueOfTodo;
+    setTodo(newTodos);
+  }
+
+  function changeToDoCompleted(index) {
     const newTodos = [...todos];
-    newTodos[i].isCompleted = !newTodos[i].isCompleted;
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
     setTodo(newTodos)
   }
 
-  function clear(i) {
+  function deleteToDo(index) {
     const newTodos = [...todos];
-    newTodos.splice(i, 1);
+    newTodos.splice(index, 1);
     setTodo(newTodos);
   }
 
-  function clearAll() {
-    const newTodos = [...todos];
-    let a = newTodos.length;
-    let b = 0;
-    while (b !== a) {
-      if (newTodos[b].isCompleted === true) {
-        newTodos.splice(b, 1);
-        a--;
-      } else {
-        b++;
-      }
-    }
-    setTodo(newTodos);
+  function clearAllCompletedToDos() {
+    const newArrOfToDos = todos.filter((todo)=>{
+      return !todo.isCompleted;
+    })
+    setTodo(newArrOfToDos);
   }
 
   const filterTodos = todos.filter((todo) => {
-    switch (param) {
+    switch (filter) {
       case 'All':
         return todo;
       case 'Active':
@@ -59,47 +57,49 @@ export default function App() {
   });
 
   return (
-    <Body>
-      <Title>
+    <PageWrapper>
+      <h1 className='title' >
         todos
-      </Title>
-      <Container>
-        <InputField>
-          <input type='text' value={todoValue}
+      </h1>
+      <div className='container'>
+        <div className='todo-input'>
+          <input className='todo-input__field' type='text' value={todoValue}
             onChange={(e) => { setTodoValue(e.target.value) }}
             onKeyDown={takeTodo}
             placeholder='What needs to be done?'></input>
-        </InputField>
-        <TodoBody>
+        </div>
+        <ul className='todo-main-body'>
           {filterTodos.map((todo, index) => {
             return (
               <ToDoLine
                 index={index}
                 todo={todo}
-                correctCompleting={correctCompleting}
-                clear={clear}
+                changeToDoCompleted={changeToDoCompleted}
+                updateToDo={updateToDo}
+                deleteToDo={deleteToDo}
               />
             )
           })}
-        </TodoBody>
+        </ul>
         <FooterLine
           filterTodos={filterTodos}
-          param={param}
-          setParam={setParam}
-          clearAll={clearAll}
+          filter={filter}
+          setFilter={setFilter}
+          clearAllCompletedToDos={clearAllCompletedToDos}
         />
-      </Container>
-    </Body>
+      </div>
+    </PageWrapper>
   );
 }
 
-const Body = styled.body`
-  * {
+const PageWrapper = styled.body`
+* {
     margin: 0;
     padding: 0;
     border: 0;
     box-sizing: border-box;
   }
+
   background-color: #f5f5f5;
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
@@ -110,49 +110,52 @@ const Body = styled.body`
   justify-content: flex-start;
   align-items: center;
   min-height:100vh;
-`
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: white;
-  box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
-  max-width: 550px;
-  width: 100%;
-  @media screen and (max-width: 390px){
-    max-width: 260px;
-  }
-`
-
-const Title = styled.h1`
-  display: flex;
-  justify-content: center;
-  color: #b83f45;
-  margin-top: 40px;
-  font-size: 120px;
-  width: 100%;
-  @media screen and (max-width: 390px){
-    font-size: 80px;
-  }
-`
-
-const InputField = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  input{
-    width: 550px;
-    height: 50px;
-    padding-left: 7px;
-  } 
-  @media screen and (max-width: 390px){
-    max-width: 260px;
-  }
-`
-const TodoBody = styled.ul`
+  .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: white;
+    box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
+    max-width: 550px;
     width: 100%;
+    @media screen and (max-width: 390px){
+      max-width: 260px;
+    }
+  }
+
+  .title{
+    display: flex;
+    justify-content: center;
+    color: #b83f45;
+    margin-top: 40px;
+    font-size: 120px;
+    width: 100%;
+    @media screen and (max-width: 390px){
+      font-size: 80px;
+    }
+  }
+  
+  .todo-input{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    @media screen and (max-width: 390px){
+      max-width: 260px;
+    }
+  }
+
+  .todo-input__field{
+    width: 550px;
+    height: 50px;
+    padding-left: 7px;
+  }
+
+  .todo-main-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+  }
 `
