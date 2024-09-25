@@ -5,13 +5,11 @@ export default function FooterLine(props) {
 
 
   const countOfNecessaryItems = props.filterTodos.filter((todo)=>{
-      switch (props.filter){
-        case 'All':
-          return !todo.isCompleted;
-        default:
-          return todo;
-      }
+      if (props.filter === 'All') {
+        return !todo.isCompleted;
+      } else return todo;
   })
+
   return (
     <FooterLineBody>
       <div>
