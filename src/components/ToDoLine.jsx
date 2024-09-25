@@ -74,8 +74,7 @@ const ToDoLineBody = styled.li`
     appearance: none;
     -webkit-appearance: none;
     border-radius: 50%;
-    
-    /* position; */
+    flex-shrink: 0;
     width: 25px;
     height: 25px;
     border: 1px solid #b83f45;
