@@ -19,6 +19,7 @@ export default function App() {
           {filteredToDos.map((todo, index) => {
             return (
               <ToDoLine
+                key={index}
                 index={index}
                 todo={todo}
               />
@@ -31,7 +32,7 @@ export default function App() {
   );
 }
 
-const PageWrapper = styled.body`
+const PageWrapper = styled.div`
 * {
     margin: 0;
     padding: 0;

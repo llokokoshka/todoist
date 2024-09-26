@@ -33,6 +33,7 @@ export default function FooterLine() {
           valuesOfFilter.map((value) => {
             return (
               <button
+                key={value}
                 className='footer-button'
                 style={{ border: (filter === value) ? "1px solid #b83f45" : "none" }}
                 onClick={() => handlerChangeFilter(value)}
