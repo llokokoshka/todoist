@@ -32,16 +32,29 @@ export default function ToDoLine({ index, todo }) {
   return (
     <ToDoLineBody key={index}>
       <div className='todo-body'>
-        <input className='todo-body__checkbox' type='checkbox' checked={todo.isCompleted} onChange={handlerChangeToDoCompleted}></input>
-        {isEdit ? (<input type='text' value={editValue}
-          onChange={(e) => {setEditValue(e.target.value)}}
-          onKeyDown={handlerUpdateToDo}
-          autoFocus
-          onBlur={changeIsEdit}></input>) :
-          (<div className='todo-body__div' style={{ textDecoration: todo.isCompleted ? "line-through" : "none" }}
+        <input
+          className='todo-body__checkbox'
+          type='checkbox'
+          checked={todo.isCompleted}
+          onChange={handlerChangeToDoCompleted}
+        />
+        {isEdit ? (
+          <input
+            type='text'
+            value={editValue}
+            onChange={(e) => { setEditValue(e.target.value) }}
+            onKeyDown={handlerUpdateToDo}
+            autoFocus
+            onBlur={changeIsEdit}
+          />
+        ) : (
+          <div
+            className='todo-body__div'
+            style={{ textDecoration: todo.isCompleted ? "line-through" : "none" }}
             onDoubleClick={changeIsEdit}>
-            {todo.value}</div>
-          )
+            {todo.value}
+          </div>
+        )
         }
       </div>
       <button className='closed-button' onClick={handlerDeleteToDo}>X</button>
@@ -101,7 +114,6 @@ const ToDoLineBody = styled.li`
     position: absolute;
     transform: scale(1.5) translate(33%, 15%);
   }
-
   .todo-body__div{
     text-align: left;
     word-wrap: break-word;
