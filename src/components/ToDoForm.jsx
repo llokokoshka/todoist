@@ -57,7 +57,7 @@ const ToDoBody = styled.form`
   }
 
   .todo-input__field{
-    width: 550px;
+    width: 505px;
     height: 50px;
     padding-left: 7px;
   }

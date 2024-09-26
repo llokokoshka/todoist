@@ -31,7 +31,7 @@ export default function ToDoLine({ index, todo }) {
 
   return (
     <ToDoLineBody key={index}>
-      <div className='todo-body' isCompleted={todo.isCompleted}>
+      <div className='todo-body'>
         <input className='todo-body__checkbox' type='checkbox' checked={todo.isCompleted} onChange={handlerChangeToDoCompleted}></input>
         {isEdit ? (<input type='text' value={editValue}
           onChange={(e) => {setEditValue(e.target.value)}}
@@ -55,6 +55,7 @@ const ToDoLineBody = styled.li`
   justify-content: space-between;
   align-items: flex-start;
   flex-direction: row;
+  max-width: 550px;
   width: 100%;
   border: 1px solid #f5f5f5 !important;
 
@@ -79,6 +80,7 @@ const ToDoLineBody = styled.li`
     column-gap: 10px;
     padding: 7px !important;
     width: 100%;
+    max-width: 550px;
   }
 
   .todo-body__checkbox{
@@ -102,6 +104,9 @@ const ToDoLineBody = styled.li`
 
   .todo-body__div{
     text-align: left;
+    word-wrap: break-word;
+    white-space: normal;
+    overflow-wrap: break-word;
   }
 
 `
