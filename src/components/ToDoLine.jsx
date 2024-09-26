@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import { updateToDo, changeToDoCompleted, deleteToDo } from '../store/actions';
 
 export default function ToDoLine({ index, todo }) {
+  const dispatch = useDispatch();
+
   const [editValue, setEditValue] = useState(todo.value);
   const [isEdit, setIsEdit] = useState(false);
-
-  const dispatch = useDispatch();
 
   const handlerUpdateToDo = (e) => {
     if (e.key === 'Enter') {
@@ -25,7 +25,7 @@ export default function ToDoLine({ index, todo }) {
     dispatch(deleteToDo(index));
   }
 
-  function changeIsEdit(){
+  function changeIsEdit() {
     setIsEdit(!isEdit);
   }
 
@@ -34,7 +34,7 @@ export default function ToDoLine({ index, todo }) {
       <div className='todo-body' isCompleted={todo.isCompleted}>
         <input className='todo-body__checkbox' type='checkbox' checked={todo.isCompleted} onChange={handlerChangeToDoCompleted}></input>
         {isEdit ? (<input type='text' value={editValue}
-          onChange={(e) => { setEditValue(e.target.value) }}
+          onChange={(e) => {setEditValue(e.target.value)}}
           onKeyDown={handlerUpdateToDo}
           autoFocus
           onBlur={changeIsEdit}></input>) :

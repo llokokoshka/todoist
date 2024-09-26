@@ -8,32 +8,38 @@ export default function ToDoForm(){
     const dispatch = useDispatch();
     const [todoValue, setTodoValue] = useState('');
 
-    const handlerTakeToDo = (e) => {
-        if (e.key === 'Enter' && todoValue) {
-          dispatch(takeTodo({
+    const handlerTakeToDo = (event) => {
+        event.preventDefault();
+        if ( !todoValue) {
+          return;
+        }
+
+        dispatch(takeTodo({
             value: todoValue,
             isCompleted: false
           }));
-          setTodoValue('');
-        }
+
+        setTodoValue('');
       };
 
       const handlerCheckedAllToDos = () => {
         dispatch(checkedAllToDos());
       };
 
+      
     return(
-        <ToDoBody>
+        <ToDoBody onSubmit={handlerTakeToDo}>
             <div className='todo-input__arrow' onClick={handlerCheckedAllToDos}>✔</div>
-            <input className='todo-input__field' type='text' value={todoValue}
-            onChange={(e) => { setTodoValue(e.target.value) }}
-            onKeyDown={handlerTakeToDo}
-            placeholder='What needs to be done?'></input>
+            <input 
+                className='todo-input__field' type='text' value={todoValue}
+                onChange={(event) =>  setTodoValue(event.target.value)}
+                placeholder='What needs to be done?' 
+            />
         </ToDoBody>
     )
 }
 
-const ToDoBody = styled.div` 
+const ToDoBody = styled.form` 
     display: flex;
     justify-content: center;
     align-items: center;

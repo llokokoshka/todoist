@@ -1,22 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFilter } from '../store/actions';
+import { changeFilter, clearAllCompletedToDos } from '../store/actions';
 
+const valuesOfFilter = ['All', 'Active', 'Completed'];
 
-export default function FooterLine(props) {
+export default function FooterLine() {
   const dispatch = useDispatch();
 
   const todos = useSelector(state => state.todos.todos);
   const filter = useSelector(state => state.todos.filter);
-  
-//  const handlerChangeFilter = (a) =>{
-//     dispatch(changeFilter(a));
-//   };
+
+  const handlerChangeFilter = (newFilter) => {
+    dispatch(changeFilter(newFilter));
+  };
 
   const countOfNecessaryItems = todos.filter((todo) => {
     return !todo.isCompleted;
   })
+
+  const handlerClearAllCompletedToDos = () => {
+    dispatch(clearAllCompletedToDos());
+  };
 
   return (
     <FooterLineBody>
@@ -24,30 +29,22 @@ export default function FooterLine(props) {
         {countOfNecessaryItems.length} items left
       </div>
       <div className='footer-buttons-block'>
-        <button 
-          className='footer-button'
-          style={{ border: (filter === 'All') ? "1px solid #b83f45" : "none" }}
-          // onClick={handlerChangeFilter('All')}
-        >
-            All
-        </button>
-        <button 
-          className='footer-button'
-          style={{ border: (filter === 'Active') ? "1px solid #b83f45" : "none" }}
-          // onClick={handlerChangeFilter('Active')}
-          >
-            Active 
-          </button>
-        <button 
-          className='footer-button'
-          style={{ border: (filter=== 'Completed') ? "1px solid #b83f45" : "none" }}
-          // onClick={handlerChangeFilter('Completed')}
-          >
-            Completed
-          </button>
+        {
+          valuesOfFilter.map((value) => {
+            return (
+              <button
+                className='footer-button'
+                style={{ border: (filter === value) ? "1px solid #b83f45" : "none" }}
+                onClick={() => handlerChangeFilter(value)}
+              >
+                {value}
+              </button>
+            )
+          })
+        }
       </div>
       <div>
-        <button className='clean-button' onClick={props.clearAllCompletedToDos}>Clear completed</button>
+        <button className='clean-button' onClick={handlerClearAllCompletedToDos}>Clear completed</button>
       </div>
     </FooterLineBody>
   )

@@ -1,18 +1,12 @@
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { clearAllCompletedToDos} from './store/actions';
+import { useSelector } from 'react-redux';
 import ToDoLine from './components/ToDoLine';
 import FooterLine from './components/FooterLine';
 import ToDoForm from './components/ToDoForm';
 import { getFilteredToDos } from './store/filterToDos';
 
 export default function App() {
-  const dispatch = useDispatch();
   const filteredToDos = useSelector(getFilteredToDos);
-
-  const handlerClearAllCompletedToDos = () => {
-    dispatch(clearAllCompletedToDos());
-  };
 
   return (
     <PageWrapper>
@@ -31,10 +25,7 @@ export default function App() {
             )
           })}
         </ul>
-        <FooterLine
-          filterTodos={filteredToDos}
-          clearAllCompletedToDos={handlerClearAllCompletedToDos}
-        />
+        <FooterLine />
       </div>
     </PageWrapper>
   );

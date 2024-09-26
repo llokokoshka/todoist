@@ -26,11 +26,11 @@ const todosSlice = createSlice({
         state.todos.splice(index, 1);
     },
     clearAllCompletedToDos:(state) =>{
-       return state.todos.filter(todo => !todo.isCompleted);
+        state.todos = state.todos.filter(todo => !todo.isCompleted);
     },
     checkedAllToDos:(state) =>{
-        const areAllCompleted = state.every(todo =>todo.isCompleted);
-        return state.todos.map(todo => ({...todo, isCompleted: !areAllCompleted}));
+        const areAllCompleted = state.todos.every(todo =>todo.isCompleted);
+        state.todos = state.todos.map(todo => ({...todo, isCompleted: !areAllCompleted}));
     },
     changeFilter: (state, action) =>{
       state.filter = action.payload;
