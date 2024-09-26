@@ -1,39 +1,50 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateToDo, changeToDoCompleted, deleteToDo } from '../store/actions';
 
-
-export default function ToDoLine(props) {
-  const [editValue, setEditValue] = useState(props.todo.value);
+export default function ToDoLine({ index, todo }) {
+  const [editValue, setEditValue] = useState(todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
-  function IsEditing() {
-    setIsEdit(true);
-  }
+  const dispatch = useDispatch();
 
-  function takeEditingToDo(e) {
+  const handlerUpdateToDo = (e) => {
     if (e.key === 'Enter') {
-      props.updateToDo(props.index, editValue);
+      dispatch(updateToDo({ index, newValueOfTodo: editValue }));
       setIsEdit(false);
     }
   }
-             
+
+  const handlerChangeToDoCompleted = () => {
+    dispatch(changeToDoCompleted(index));
+  }
+
+  const handlerDeleteToDo = () => {
+    dispatch(deleteToDo(index));
+  }
+
+  function changeIsEdit(){
+    setIsEdit(!isEdit);
+  }
+
   return (
-    <ToDoLineBody key={props.index}>
-      <div className='todo-body' isCompleted={props.todo.isCompleted}>
-        <input className='todo-body__checkbox' type='checkbox' checked={props.todo.isCompleted} onChange={() => props.changeToDoCompleted(props.index)}></input>
+    <ToDoLineBody key={index}>
+      <div className='todo-body' isCompleted={todo.isCompleted}>
+        <input className='todo-body__checkbox' type='checkbox' checked={todo.isCompleted} onChange={handlerChangeToDoCompleted}></input>
         {isEdit ? (<input type='text' value={editValue}
           onChange={(e) => { setEditValue(e.target.value) }}
-          onKeyDown={takeEditingToDo}
+          onKeyDown={handlerUpdateToDo}
           autoFocus
-          onBlur={() => setIsEdit(false)}></input>) :
-          (<div className='todo-body__div' style={{textDecoration: props.todo.isCompleted ? "line-through" : "none"}}
-            onDoubleClick={IsEditing}>
-            {props.todo.value}</div>
+          onBlur={changeIsEdit}></input>) :
+          (<div className='todo-body__div' style={{ textDecoration: todo.isCompleted ? "line-through" : "none" }}
+            onDoubleClick={changeIsEdit}>
+            {todo.value}</div>
           )
         }
       </div>
-      <button className='closed-button' onClick={() => props.deleteToDo(props.index)}>X</button>
+      <button className='closed-button' onClick={handlerDeleteToDo}>X</button>
     </ToDoLineBody>
   )
 }

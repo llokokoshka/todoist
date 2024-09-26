@@ -1,69 +1,18 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearAllCompletedToDos} from './store/actions';
 import ToDoLine from './components/ToDoLine';
 import FooterLine from './components/FooterLine';
+import ToDoForm from './components/ToDoForm';
+import { getFilteredToDos } from './store/filterToDos';
 
 export default function App() {
-  const [todos, setTodo] = useState([]);
-  const [todoValue, setTodoValue] = useState('');
-  const [filter, setFilter] = useState('All');
+  const dispatch = useDispatch();
+  const filteredToDos = useSelector(getFilteredToDos);
 
-  function takeTodo(e) {
-    if (e.key === 'Enter' && todoValue) {
-      setTodo([...todos, {
-        value: todoValue,
-        isCompleted: false
-      }]);
-      setTodoValue('');
-    }
+  const handlerClearAllCompletedToDos = () => {
+    dispatch(clearAllCompletedToDos());
   };
-
-  function updateToDo(index, newValueOfTodo){
-    const newTodos =[...todos];
-    newTodos[index].value = newValueOfTodo;
-    setTodo(newTodos);
-  }
-
-  function changeToDoCompleted(index) {
-    const newTodos = [...todos];
-    newTodos[index].isCompleted = !newTodos[index].isCompleted;
-    setTodo(newTodos)
-  }
-
-  function deleteToDo(index) {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodo(newTodos);
-  }
-
-  function clearAllCompletedToDos() {
-    const newArrOfToDos = todos.filter((todo)=>{
-      return !todo.isCompleted;
-    })
-    setTodo(newArrOfToDos);
-  }
-
-  const filterTodos = todos.filter((todo) => {
-    switch (filter) {
-      case 'All':
-        return todo;
-      case 'Active':
-        return !todo.isCompleted;
-      case 'Completed':
-        return todo.isCompleted;
-      default:
-        return todo;
-    }
-  });
-
-  function checkedAllToDos(){
-    const areAllCompleted = todos.every(todo =>todo.isCompleted);
-    const newArrTodos = todos.map(todo =>({
-      ...todo,
-      isCompleted: !areAllCompleted,
-    }))
-    setTodo(newArrTodos);
-  }
 
   return (
     <PageWrapper>
@@ -71,32 +20,20 @@ export default function App() {
         todos
       </h1>
       <div className='container'>
-        <div className='todo-input'>
-          <div className='todo-input__arrow' onClick={checkedAllToDos}>✔</div>
-          <input className='todo-input__field' type='text' value={todoValue}
-            onChange={(e) => { setTodoValue(e.target.value) }}
-            onKeyDown={takeTodo}
-            placeholder='What needs to be done?'></input>
-        </div>
+        <ToDoForm />
         <ul className='todo-main-body'>
-          {filterTodos.map((todo, index) => {
+          {filteredToDos.map((todo, index) => {
             return (
               <ToDoLine
                 index={index}
                 todo={todo}
-                changeToDoCompleted={changeToDoCompleted}
-                updateToDo={updateToDo}
-                deleteToDo={deleteToDo}
               />
             )
           })}
         </ul>
         <FooterLine
-          todos={todos}
-          filterTodos={filterTodos}
-          filter={filter}
-          setFilter={setFilter}
-          clearAllCompletedToDos={clearAllCompletedToDos}
+          filterTodos={filteredToDos}
+          clearAllCompletedToDos={handlerClearAllCompletedToDos}
         />
       </div>
     </PageWrapper>
@@ -129,7 +66,6 @@ const PageWrapper = styled.body`
     background-color: white;
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
     max-width: 550px;
-    /* padding: 0 10px 5px; */
     width: 100%;
     @media screen and (max-width: 390px){
       max-width: 260px;
@@ -146,30 +82,6 @@ const PageWrapper = styled.body`
     @media screen and (max-width: 390px){
       font-size: 80px;
     }
-  }
-  
-  .todo-input{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    @media screen and (max-width: 390px){
-      max-width: 260px;
-    }
-  }
-
-  .todo-input__arrow{
-    transform: scale(2);
-    margin: 0 15px;
-    &:hover{
-      cursor: pointer; 
-    }
-  }
-
-  .todo-input__field{
-    width: 550px;
-    height: 50px;
-    padding-left: 7px;
   }
 
   .todo-main-body{
