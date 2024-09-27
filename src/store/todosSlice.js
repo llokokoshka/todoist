@@ -23,7 +23,7 @@ const todosSlice = createSlice({
       })
     },
 
-    changeToDoCompleted: (state, action) => {
+    toggleToDoComplete: (state, action) => {
       const { todo } = action.payload;
 
       state.todos.forEach((myTodo) => {
@@ -34,7 +34,7 @@ const todosSlice = createSlice({
     },
 
     deleteToDo: (state, action) => {
-      const {id} = action.payload;
+      const { id } = action.payload;
       console.log(id);
       state.todos = state.todos.filter((todo) => todo.id !== id)
     },
@@ -42,7 +42,7 @@ const todosSlice = createSlice({
     clearAllCompletedToDos: (state) => {
       state.todos = state.todos.filter(todo => !todo.isCompleted);
     },
-    checkedAllToDos: (state) => {
+    toggleAllToDoCompletion: (state) => {
       const areAllCompleted = state.todos.every(todo => todo.isCompleted);
       state.todos = state.todos.map(todo => ({ ...todo, isCompleted: !areAllCompleted }));
     },
@@ -55,10 +55,10 @@ const todosSlice = createSlice({
 export const {
   addTodo,
   updateToDo,
-  changeToDoCompleted,
+  toggleToDoComplete,
   deleteToDo,
   clearAllCompletedToDos,
-  checkedAllToDos,
+  toggleAllToDoCompletion,
   changeFilter,
 } = todosSlice.actions;
 

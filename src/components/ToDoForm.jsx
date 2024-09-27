@@ -2,13 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodo, checkedAllToDos } from '../store/todosSlice';
+import { addTodo, toggleAllToDoCompletion } from '../store/todosSlice';
+import { baseTheme } from '../styles/theme'
 
 export default function ToDoForm() {
   const dispatch = useDispatch();
   const [todoValue, setTodoValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
 
-  const handlerTakeToDo = (event) => {
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const handleAddToDo = (event) => {
     event.preventDefault();
     if (!todoValue.trim()) {
       return;
@@ -17,16 +27,20 @@ export default function ToDoForm() {
     setTodoValue('');
   };
 
-  const handlerCheckedAllToDos = () => {
-    dispatch(checkedAllToDos());
+  const handleToggleAllToDosCompletion = () => {
+    dispatch(toggleAllToDoCompletion());
   };
 
-  const changeTodoValue = (e)=>{
-    setTodoValue(e.target.value)
+  const changeTodoValue = (e) => {
+    setTodoValue(e.target.value);
   }
+
   return (
-    <ToDoBody onSubmit={handlerTakeToDo}>
-      <div className='todo-input__arrow' onClick={handlerCheckedAllToDos}>✔</div>
+    <ToDoBody onSubmit={handleAddToDo} isFocused={isFocused}>
+      <div className='todo-input__arrow' 
+      onClick={handleToggleAllToDosCompletion}
+       onFocus={handleFocus}
+       onBlur={handleBlur}>✔</div>
       <input
         className='todo-input__field' type='text' value={todoValue}
         onChange={changeTodoValue}
@@ -41,8 +55,10 @@ const ToDoBody = styled.form`
     justify-content: center;
     align-items: center;
     width: 100%;
+    border: ${({isFocused})=>(isFocused ? '1px solid #b83f45' : '1px solid transparent')};
+
     @media screen and (max-width: 390px){
-      max-width: 260px;
+      max-width: ${baseTheme.sizes.modile};
     }
 
   .todo-input__arrow{
@@ -54,9 +70,13 @@ const ToDoBody = styled.form`
   }
 
   .todo-input__field{
-    width: 505px;
-    height: 50px;
-    padding-left: 7px;
+    width: ${baseTheme.sizes.shirt_dectop};
+    height: ${baseTheme.sizes.height};
+    padding-left: ${baseTheme.padding.large};
+  }
+
+  .todo-input__field:focus{
+    outline: none;
   }
 
 `

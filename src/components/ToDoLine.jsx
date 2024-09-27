@@ -2,8 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateToDo, changeToDoCompleted, deleteToDo } from '../store/todosSlice';
+import { updateToDo, toggleToDoComplete, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
+import { baseTheme } from '../styles/theme'
+
 
 export default function ToDoLine({ id, todo }) {
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ export default function ToDoLine({ id, todo }) {
   const [editValue, setEditValue] = useState(todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handlerUpdateToDo = (e) => {
+  const handleUpdateToDo = (e) => {
     if (e.key !== 'Enter') {
       return;
     }
@@ -20,11 +22,11 @@ export default function ToDoLine({ id, todo }) {
     setIsEdit(false);
   }
 
-  const handlerChangeToDoCompleted = () => {
-    dispatch(changeToDoCompleted({ todo }));
+  const handleToggleToDoComplete = () => {
+    dispatch(toggleToDoComplete({ todo }));
   }
 
-  const handlerDeleteToDo = () => {
+  const handleDeleteToDo = () => {
     dispatch(deleteToDo({ id: todo.id }));
   }
 
@@ -32,32 +34,34 @@ export default function ToDoLine({ id, todo }) {
     setIsEdit(!isEdit);
   }
 
-  const changeEditValue=(e)=>{
+  const changeEditValue = (e) => {
     setEditValue(e.target.value)
   }
 
   return (
     <ToDoLineBody >
-      <div className='todo-body' onDoubleClick={changeIsEdit}>
-      <input
-              className='todo-body__checkbox'
-              type='checkbox'
-              checked={todo.isCompleted}
-              onChange={handlerChangeToDoCompleted}
-            />
+      <div className={cn('todo-body',{ reset: isEdit,})} >
+        <input
+          className={cn('todo-body__checkbox',{
+            hippen: isEdit,
+          } )}
+          type='checkbox'
+          checked={todo.isCompleted}
+          onChange={handleToggleToDoComplete}
+        />
         {isEdit ? (
           <input
-            className='todo-body__update-input'
+            autoFocus
+            className='todo-body__update-input reset'
             type='text'
             value={editValue}
             onChange={changeEditValue}
-            onKeyDown={handlerUpdateToDo}
+            onKeyDown={handleUpdateToDo}
             onBlur={changeIsEdit}
-            id='tr'
           />
         ) : (
           <>
-            <div className='todo-body__div-button'>
+            <div className='todo-body__div-button' onDoubleClick={changeIsEdit}>
               <div
                 className={cn('todo-body__div', {
                   completed: (todo.isCompleted),
@@ -65,7 +69,7 @@ export default function ToDoLine({ id, todo }) {
                 onDoubleClick={changeIsEdit}>
                 {todo.value}
               </div>
-              <button className='closed-button' onClick={handlerDeleteToDo}>X</button>
+              <button className='closed-button' onClick={handleDeleteToDo}>X</button>
             </div>
 
           </>
@@ -82,16 +86,16 @@ const ToDoLineBody = styled.li`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  max-width: 550px;
-  min-height: 50px;
+  max-width: ${baseTheme.sizes.desctop};
+  min-height: ${baseTheme.sizes.height};
   width: 100%;
   height: 100%;
-  border: 1px solid #f5f5f5;
+  border:  ${baseTheme.border.grey};;
 
   .closed-button{
     opacity: 0;
     background-color: white;
-    padding: 3px;
+    padding: ${baseTheme.padding.little};
    &:hover{
       cursor: pointer; 
     }
@@ -107,37 +111,52 @@ const ToDoLineBody = styled.li`
     justify-content: start;
     align-items: center;
     column-gap: 10px;
-    padding: 0 7px; 
+    padding: 0 ${baseTheme.padding.large};
     width: 100%;
     height: 100%;
-    max-width: 550px;
+    max-width: ${baseTheme.sizes.desctop};
   }
 
+  .reset{
+    appearance: none;
+
+  }
   .todo-body__update-input{
-    width: 505px;
+    width: ${baseTheme.sizes.shirt_dectop};
     height: 39px;
+  }
+  .todo-body__update-input:focus {
+    outline: none;
+    border:  ${baseTheme.border.red};
   }
 
   .todo-body__checkbox{
     appearance: none;
     -webkit-appearance: none;
     display: flex;
+    opacity: 1;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     flex-shrink: 0;
     width: 25px;
     height: 25px;
-    border: 1px solid #b83f45;
+    border:  ${baseTheme.border.red};
     cursor: pointer;
   }
+
   .todo-body__checkbox:checked{
-    background-color:#ffe7e7;
+    background-color:${baseTheme.colors.light_pink};
   }
+  
   .todo-body__checkbox:checked::after{
     content: '✓';
     position: absolute;
     transform: scale(1.5);
+  }
+
+  .hippen{
+    opacity: 0;
   }
   .todo-body__div{
     display: flex;

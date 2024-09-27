@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ContainerOfToDos from './components/ContainerOfToDos'
+import { baseTheme } from './styles/theme'
 
 export default function App() {
 
@@ -14,7 +15,7 @@ export default function App() {
 }
 
 const PageWrapper = styled.div`
-  background-color: #f5f5f5;
+  background-color:  ${baseTheme.colors.background};
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-size: 14px;
@@ -28,7 +29,7 @@ const PageWrapper = styled.div`
   .title {
     display: flex;
     justify-content: center;
-    color: #b83f45;
+    color: ${baseTheme.colors.primary};
     margin-top: 40px;
     font-size: 120px;
     width: 100%;

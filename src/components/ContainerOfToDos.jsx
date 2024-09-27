@@ -5,6 +5,8 @@ import ToDoLine from './ToDoLine';
 import FooterLine from './FooterLine';
 import { getFilteredToDos } from '../store/filterToDos';
 import { useSelector } from 'react-redux';
+import {baseTheme} from '../styles/theme';
+
 
 export default function ContainerOfToDos() {
   const filteredToDos = useSelector(getFilteredToDos);
@@ -33,11 +35,11 @@ const ContainerForTodos = styled.div`
     justify-content: center;
     background-color: white;
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
-    max-width: 550px;
+    max-width: ${baseTheme.sizes.desctop};
     width: 100%;
     
     @media screen and (max-width: 390px){
-      max-width: 260px;
+      max-width: ${baseTheme.sizes.modile};
     }
 
   .todo-main-body{

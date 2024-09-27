@@ -1,25 +1,26 @@
 
 export const baseTheme = {
     colors: {
-      primary: '#7986cb',
-      secondary: '#2b2b2b',
-      success: '#4caf50',
-      danger: '#f44336 ',
-      
-      bg: '#E5E4E8',
-      font: '#19191B',
+      background: '#f5f5f5',
+      primary: '#b83f45',
+      light_pink: '#ffe7e7'
     },
   
-    media: {
-      small: '(max-width: 320px)',
-    },
-  
-    // in px
     sizes: {
-      header: { height: 56 },
-      container: { width: 1200 },
-      footer: { height: 128 },
-      modal: { width: 540 },
+      desctop: '550px',
+      modile: '260px',
+      shirt_dectop: '505px',
+      height: '50px',
     },
-  
+
+    border: {
+      grey: ('1px solid #f5f5f5'),
+      red: ('1px solid #b83f45'),
+    },
+
+    padding:{
+      large: '7px',
+      normal: '5px',
+      little: '3px',
+    }
   }
