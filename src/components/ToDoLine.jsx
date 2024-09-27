@@ -4,25 +4,27 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateToDo, changeToDoCompleted, deleteToDo } from '../store/todosSlice';
 
-export default function ToDoLine({ index, todo }) {
+export default function ToDoLine({id, todo}) {
   const dispatch = useDispatch();
 
   const [editValue, setEditValue] = useState(todo.value);
   const [isEdit, setIsEdit] = useState(false);
 
   const handlerUpdateToDo = (e) => {
-    if (e.key === 'Enter') {
-      dispatch(updateToDo({ index, newValueOfTodo: editValue }));
-      setIsEdit(false);
+    if (e.key !== 'Enter') {
+      return;
     }
+
+    dispatch(updateToDo({ id, newValue: editValue }));
+    setIsEdit(false);
   }
 
   const handlerChangeToDoCompleted = () => {
-    dispatch(changeToDoCompleted(index));
+    dispatch(changeToDoCompleted({todo}));
   }
 
   const handlerDeleteToDo = () => {
-    dispatch(deleteToDo(index));
+    dispatch(deleteToDo({id: todo.id}));
   }
 
   function changeIsEdit() {
@@ -30,7 +32,7 @@ export default function ToDoLine({ index, todo }) {
   }
 
   return (
-    <ToDoLineBody key={index}>
+    <ToDoLineBody >
       <div className='todo-body'>
         <input
           className='todo-body__checkbox'
@@ -70,12 +72,12 @@ const ToDoLineBody = styled.li`
   flex-direction: row;
   max-width: 550px;
   width: 100%;
-  border: 1px solid #f5f5f5 !important;
+  border: 1px solid #f5f5f5;
 
   .closed-button{
     opacity: 0;
     background-color: white;
-    padding: 3px !important;
+    padding: 3px;
    &:hover{
       cursor: pointer; 
     }
@@ -91,7 +93,7 @@ const ToDoLineBody = styled.li`
     justify-content: start;
     align-items: center;
     column-gap: 10px;
-    padding: 7px !important;
+    padding: 7px; 
     width: 100%;
     max-width: 550px;
   }

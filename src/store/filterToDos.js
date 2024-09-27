@@ -6,8 +6,6 @@ const getFilter = state => state.todos.filter;
 export const getFilteredToDos = createSelector([getTodos, getFilter],
     (getTodos, getFilter) => {
         switch (getFilter) {
-            case 'All':
-                return getTodos;
             case 'Active':
                 return getTodos.filter(todo => !todo.isCompleted);
             case 'Completed':

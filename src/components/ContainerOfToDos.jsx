@@ -7,24 +7,23 @@ import { getFilteredToDos } from '../store/filterToDos';
 import { useSelector } from 'react-redux';
 
 export default function ContainerOfToDos() {
-    const filteredToDos = useSelector(getFilteredToDos);
-    return (
-        <ContainerForTodos>
-            <ToDoForm />
-            <ul className='todo-main-body'>
-                {filteredToDos.map((todo, index) => {
-                    return (
-                        <ToDoLine
-                            key={index}
-                            index={index}
-                            todo={todo}
-                        />
-                    )
-                })}
-            </ul>
-            <FooterLine />
-        </ContainerForTodos>
-    )
+  const filteredToDos = useSelector(getFilteredToDos);
+  return (
+    <ContainerForTodos>
+      <ToDoForm />
+      <ul className='todo-main-body'>
+        {filteredToDos.map((todo, index) => {
+          return (
+            <ToDoLine
+              id={todo.id}
+              todo={todo}
+            />
+          )
+        }) }
+      </ul>
+      <FooterLine />
+    </ContainerForTodos>
+  )
 }
 
 const ContainerForTodos = styled.div`
@@ -35,6 +34,7 @@ const ContainerForTodos = styled.div`
     box-shadow: 5px 3px 5px 1px rgba(0, 0, 0, 0.25);
     max-width: 550px;
     width: 100%;
+    
     @media screen and (max-width: 390px){
       max-width: 260px;
     }

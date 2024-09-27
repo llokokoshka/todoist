@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeFilter, clearAllCompletedToDos } from '../store/todosSlice';
+import cn from 'classnames'
 
 const valuesOfFilter = ['All', 'Active', 'Completed'];
 
 export default function FooterLine() {
   const dispatch = useDispatch();
 
-  const todos = useSelector(state => state.todos.todos);
-  const filter = useSelector(state => state.todos.filter);
+  const {todos, filter} = useSelector(state => state.todos);
 
   const handlerChangeFilter = (newFilter) => {
     dispatch(changeFilter(newFilter));
@@ -33,9 +33,10 @@ export default function FooterLine() {
           valuesOfFilter.map((value) => {
             return (
               <button
-                key={value}
-                className='footer-button'
-                style={{ border: (filter === value) ? "1px solid #b83f45" : "none" }}
+                className={cn('footer-button', {
+                  active: filter === value,
+
+                })}
                 onClick={() => handlerChangeFilter(value)}
               >
                 {value}
@@ -57,7 +58,8 @@ const FooterLineBody = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 7px  !important; 
+  padding: 7px; 
+
   @media screen and (max-width: 390px){
     flex-direction: column;
     row-gap: 10px;
@@ -86,5 +88,9 @@ const FooterLineBody = styled.div`
         text-decoration: underline;
         cursor: pointer; 
     }
+  }
+
+  .active {
+    border: 1px solid #b83f45;
   }
 `

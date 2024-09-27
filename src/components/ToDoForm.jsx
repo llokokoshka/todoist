@@ -2,41 +2,36 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { takeTodo, checkedAllToDos } from '../store/todosSlice';
+import { addTodo, checkedAllToDos } from '../store/todosSlice';
 
-export default function ToDoForm(){
-    const dispatch = useDispatch();
-    const [todoValue, setTodoValue] = useState('');
+export default function ToDoForm() {
+  const dispatch = useDispatch();
+  const [todoValue, setTodoValue] = useState('');
 
-    const handlerTakeToDo = (event) => {
-        event.preventDefault();
-        if ( !todoValue) {
-          return;
-        }
+  const handlerTakeToDo = (event) => {
+    event.preventDefault();
+    if (!todoValue.trim()) {
+      return;
+    }
+    dispatch(addTodo(todoValue));
+    setTodoValue('');
+  };
 
-        dispatch(takeTodo({
-            value: todoValue,
-            isCompleted: false
-          }));
+  const handlerCheckedAllToDos = () => {
+    dispatch(checkedAllToDos());
+  };
 
-        setTodoValue('');
-      };
 
-      const handlerCheckedAllToDos = () => {
-        dispatch(checkedAllToDos());
-      };
-
-      
-    return(
-        <ToDoBody onSubmit={handlerTakeToDo}>
-            <div className='todo-input__arrow' onClick={handlerCheckedAllToDos}>✔</div>
-            <input 
-                className='todo-input__field' type='text' value={todoValue}
-                onChange={(event) =>  setTodoValue(event.target.value)}
-                placeholder='What needs to be done?' 
-            />
-        </ToDoBody>
-    )
+  return (
+    <ToDoBody onSubmit={handlerTakeToDo}>
+      <div className='todo-input__arrow' onClick={handlerCheckedAllToDos}>✔</div>
+      <input
+        className='todo-input__field' type='text' value={todoValue}
+        onChange={(event) => setTodoValue(event.target.value)}
+        placeholder='What needs to be done?'
+      />
+    </ToDoBody>
+  )
 }
 
 const ToDoBody = styled.form` 

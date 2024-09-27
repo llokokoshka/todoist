@@ -32,13 +32,14 @@ const PageWrapper = styled.div`
   align-items: center;
   min-height:100vh;
 
-  .title{
+  .title {
     display: flex;
     justify-content: center;
     color: #b83f45;
     margin-top: 40px;
     font-size: 120px;
     width: 100%;
+
     @media screen and (max-width: 390px){
       font-size: 80px;
     }
