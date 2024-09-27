@@ -14,12 +14,6 @@ export default function App() {
 }
 
 const PageWrapper = styled.div`
-* {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    box-sizing: border-box;
-  }
 
   background-color: #f5f5f5;
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
