@@ -21,13 +21,15 @@ export default function ToDoForm() {
     dispatch(checkedAllToDos());
   };
 
-
+  const changeTodoValue = (e)=>{
+    setTodoValue(e.target.value)
+  }
   return (
     <ToDoBody onSubmit={handlerTakeToDo}>
       <div className='todo-input__arrow' onClick={handlerCheckedAllToDos}>✔</div>
       <input
         className='todo-input__field' type='text' value={todoValue}
-        onChange={(event) => setTodoValue(event.target.value)}
+        onChange={changeTodoValue}
         placeholder='What needs to be done?'
       />
     </ToDoBody>

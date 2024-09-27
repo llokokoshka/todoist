@@ -14,7 +14,6 @@ export default function App() {
 }
 
 const PageWrapper = styled.div`
-
   background-color: #f5f5f5;
   font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: normal;
