@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { takeTodo, checkedAllToDos } from '../store/actions';
+import { takeTodo, checkedAllToDos } from '../store/todosSlice';
 
 export default function ToDoForm(){
     const dispatch = useDispatch();

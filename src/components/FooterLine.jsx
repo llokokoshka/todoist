@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFilter, clearAllCompletedToDos } from '../store/actions';
+import { changeFilter, clearAllCompletedToDos } from '../store/todosSlice';
 
 const valuesOfFilter = ['All', 'Active', 'Completed'];
 

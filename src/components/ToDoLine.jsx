@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateToDo, changeToDoCompleted, deleteToDo } from '../store/actions';
+import { updateToDo, changeToDoCompleted, deleteToDo } from '../store/todosSlice';
 
 export default function ToDoLine({ index, todo }) {
   const dispatch = useDispatch();

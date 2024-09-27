@@ -5,7 +5,6 @@ const   initialState = {
   filter: 'All',
 }
 
-
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
