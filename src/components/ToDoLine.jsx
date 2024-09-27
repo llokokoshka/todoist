@@ -34,32 +34,36 @@ export default function ToDoLine({id, todo}) {
   return (
     <ToDoLineBody >
       <div className='todo-body'>
-        <input
+        
+        {isEdit ? (
+          <input
+            type='text'
+            value={editValue}
+            autoFocus
+            onChange={(e) => { setEditValue(e.target.value) }}
+            onKeyDown={handlerUpdateToDo}
+            onBlur={changeIsEdit}
+          />
+        ) : (
+          <>
+            <input
           className='todo-body__checkbox'
           type='checkbox'
           checked={todo.isCompleted}
           onChange={handlerChangeToDoCompleted}
         />
-        {isEdit ? (
-          <input
-            type='text'
-            value={editValue}
-            onChange={(e) => { setEditValue(e.target.value) }}
-            onKeyDown={handlerUpdateToDo}
-            autoFocus
-            onBlur={changeIsEdit}
-          />
-        ) : (
-          <div
+         <div
             className='todo-body__div'
             style={{ textDecoration: todo.isCompleted ? "line-through" : "none" }}
             onDoubleClick={changeIsEdit}>
             {todo.value}
           </div>
+          <button className='closed-button' onClick={handlerDeleteToDo}>X</button>
+          </>
         )
         }
       </div>
-      <button className='closed-button' onClick={handlerDeleteToDo}>X</button>
+      
     </ToDoLineBody>
   )
 }
@@ -117,10 +121,13 @@ const ToDoLineBody = styled.li`
     transform: scale(1.5) translate(33%, 15%);
   }
   .todo-body__div{
+    display: flex;
     text-align: left;
     word-wrap: break-word;
     white-space: normal;
     overflow-wrap: break-word;
+    max-width: 100%;
+    max-height: 100%;
   }
 
 `

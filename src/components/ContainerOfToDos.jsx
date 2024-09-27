@@ -12,9 +12,10 @@ export default function ContainerOfToDos() {
     <ContainerForTodos>
       <ToDoForm />
       <ul className='todo-main-body'>
-        {filteredToDos.map((todo, index) => {
+        {filteredToDos.map((todo) => {
           return (
             <ToDoLine
+              key={todo.id}
               id={todo.id}
               todo={todo}
             />

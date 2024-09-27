@@ -33,9 +33,9 @@ export default function FooterLine() {
           valuesOfFilter.map((value) => {
             return (
               <button
+                key={value}
                 className={cn('footer-button', {
                   active: filter === value,
-
                 })}
                 onClick={() => handlerChangeFilter(value)}
               >
