@@ -39,11 +39,12 @@ export default function ToDoForm() {
     <ToDoBody onSubmit={handleAddToDo} isFocused={isFocused}>
       <div className='todo-input__arrow' 
       onClick={handleToggleAllToDosCompletion}
-       onFocus={handleFocus}
-       onBlur={handleBlur}>✔</div>
+       >✔</div>
       <input
         className='todo-input__field' type='text' value={todoValue}
         onChange={changeTodoValue}
+        onFocus={handleFocus}
+       onBlur={handleBlur}
         placeholder='What needs to be done?'
       />
     </ToDoBody>
