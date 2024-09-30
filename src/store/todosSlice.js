@@ -9,9 +9,23 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    addTodo: (state, action) => {
-      const uniqueID = `id-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
-      state.todos.push({ id: uniqueID, value: action.payload, isCompleted: false },);
+
+    addTodo: {
+      prepare(data) {
+        return {
+          payload: {
+            value: data,
+            uniqueID: Math.random(),
+          }
+        }
+      },
+      reducer(state, action) {
+        state.todos.push({
+          id: action.payload.uniqueID,
+          value: action.payload.value,
+          isCompleted: false,
+        },);
+      }
     },
 
     updateToDo: (state, action) => {

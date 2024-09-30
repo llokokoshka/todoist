@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTodo, toggleAllToDoCompletion } from '../store/todosSlice';
-import { baseTheme } from '../styles/theme'
 
 export default function ToDoForm() {
   const dispatch = useDispatch();
@@ -59,7 +58,7 @@ const ToDoBody = styled.form`
     border: ${({isFocused})=>(isFocused ? '1px solid #b83f45' : '1px solid transparent')};
 
     @media screen and (max-width: 390px){
-      max-width: ${baseTheme.sizes.modile};
+      max-width: ${({theme}) => theme.sizes.modile};
     }
 
   .todo-input__arrow{
@@ -71,9 +70,9 @@ const ToDoBody = styled.form`
   }
 
   .todo-input__field{
-    width: ${baseTheme.sizes.shirt_dectop};
-    height: ${baseTheme.sizes.height};
-    padding-left: ${baseTheme.padding.large};
+    width: ${({theme}) => theme.sizes.shirt_dectop};
+    height: ${({theme}) => theme.sizes.height};
+    padding-left: ${({theme}) => theme.padding.large};
   }
 
   .todo-input__field:focus{

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeFilter, clearAllCompletedToDos } from '../store/todosSlice';
 import cn from 'classnames'
-import { baseTheme } from '../styles/theme'
-
 
 const valuesOfFilter = ['All', 'Active', 'Completed'];
 
@@ -60,7 +58,7 @@ const FooterLineBody = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: ${baseTheme.padding.large};
+  padding: ${({theme}) => theme.padding.large};
 
   @media screen and (max-width: 390px){
     flex-direction: column;
@@ -73,19 +71,19 @@ const FooterLineBody = styled.div`
   }
 
   .footer-button{
-    padding: ${baseTheme.padding.normal};
+    padding: ${({theme}) => theme.padding.normal};
     background-color: white;
     border: 1px solid transparent;
-    border-radius: ${baseTheme.padding.little};  
+    border-radius: ${({theme}) => theme.padding.little};  
   }
   
   .footer-button:hover{
-    background-color:${baseTheme.colors.light_pink};
+    background-color:${({theme}) => theme.colors.light_pink};
     cursor: pointer; 
   }
 
   .clean-button{
-    padding: ${baseTheme.padding.normal};
+    padding: ${({theme}) => theme.padding.normal};
     background-color: white;
     &:hover {
         text-decoration: underline;
@@ -94,6 +92,6 @@ const FooterLineBody = styled.div`
   }
 
   .active {
-    border: ${baseTheme.border.red};
+    border: ${({theme}) => theme.border.red};
   }
 `

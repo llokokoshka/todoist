@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateToDo, toggleToDoComplete, deleteToDo } from '../store/todosSlice';
 import cn from 'classnames';
-import { baseTheme } from '../styles/theme'
 
 
 export default function ToDoLine({ id, todo }) {
@@ -86,16 +85,16 @@ const ToDoLineBody = styled.li`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  max-width: ${baseTheme.sizes.desctop};
-  min-height: ${baseTheme.sizes.height};
+  max-width: ${({theme}) => theme.sizes.desctop};
+  min-height: ${({theme}) => theme.sizes.height};
   width: 100%;
   height: 100%;
-  border:  ${baseTheme.border.grey};;
+  border:  ${({theme}) => theme.border.grey};;
 
   .closed-button{
     opacity: 0;
     background-color: white;
-    padding: ${baseTheme.padding.little};
+    padding: ${({theme}) => theme.padding.little};
    &:hover{
       cursor: pointer; 
     }
@@ -111,10 +110,10 @@ const ToDoLineBody = styled.li`
     justify-content: start;
     align-items: center;
     column-gap: 10px;
-    padding: 0 ${baseTheme.padding.large};
+    padding: 0 ${({theme}) => theme.padding.large};
     width: 100%;
     height: 100%;
-    max-width: ${baseTheme.sizes.desctop};
+    max-width: ${({theme}) => theme.sizes.desctop};
   }
 
   .reset{
@@ -122,12 +121,12 @@ const ToDoLineBody = styled.li`
 
   }
   .todo-body__update-input{
-    width: ${baseTheme.sizes.shirt_dectop};
+    width: ${({theme}) => theme.sizes.shirt_dectop};
     height: 39px;
   }
   .todo-body__update-input:focus {
     outline: none;
-    border:  ${baseTheme.border.red};
+    border:  ${({theme}) => theme.border.red};
   }
 
   .todo-body__checkbox{
@@ -141,12 +140,12 @@ const ToDoLineBody = styled.li`
     flex-shrink: 0;
     width: 25px;
     height: 25px;
-    border:  ${baseTheme.border.red};
+    border:  ${({theme}) => theme.border.red};
     cursor: pointer;
   }
 
   .todo-body__checkbox:checked{
-    background-color:${baseTheme.colors.light_pink};
+    background-color:${({theme}) => theme.colors.light_pink};
   }
   
   .todo-body__checkbox:checked::after{
