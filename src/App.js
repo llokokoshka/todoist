@@ -6,7 +6,7 @@ export default function App() {
   return (
     <PageWrapper>
       <h1 className='title' >
-        todos
+        Список задач
       </h1>
       <ContainerOfToDos />
     </PageWrapper>
@@ -30,7 +30,7 @@ const PageWrapper = styled.div`
     justify-content: center;
     color: ${({theme}) => theme.colors.primary};
     margin-top: 40px;
-    font-size: 120px;
+    font-size: 110px;
     width: 100%;
 
     @media screen and (max-width: 390px){

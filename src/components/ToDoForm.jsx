@@ -44,7 +44,7 @@ export default function ToDoForm() {
         onChange={changeTodoValue}
         onFocus={handleFocus}
        onBlur={handleBlur}
-        placeholder='What needs to be done?'
+        placeholder='Что необходимо сделать?'
       />
     </ToDoBody>
   )

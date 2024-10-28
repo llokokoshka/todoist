@@ -22,11 +22,20 @@ export default function FooterLine() {
   const handlerClearAllCompletedToDos = () => {
     dispatch(clearAllCompletedToDos());
   };
+  const printValue=(value)=>{
+    if (value === 'All')
+      return 'Все';
+    if (value === 'Active')
+      return 'Активные';
+    if (value === 'Completed')
+      return 'Завершенные';
+
+  }
 
   return (
     <FooterLineBody>
       <div>
-        {countOfNecessaryItems.length} items left
+        {countOfNecessaryItems.length} осталось выполнить
       </div>
       <div className='footer-buttons-block'>
         {
@@ -39,14 +48,14 @@ export default function FooterLine() {
                 })}
                 onClick={() => handlerChangeFilter(value)}
               >
-                {value}
+                {printValue(value)}
               </button>
             )
           })
         }
       </div>
       <div>
-        <button className='clean-button' onClick={handlerClearAllCompletedToDos}>Clear completed</button>
+        <button className='clean-button' onClick={handlerClearAllCompletedToDos}>Очистить выполнененое</button>
       </div>
     </FooterLineBody>
   )
