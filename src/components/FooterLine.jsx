@@ -35,7 +35,7 @@ export default function FooterLine() {
   return (
     <FooterLineBody>
       <div>
-        {countOfNecessaryItems.length} items left
+        {countOfNecessaryItems.length} осталось задач
       </div>
       <div className='footer-buttons-block'>
         {
@@ -55,7 +55,7 @@ export default function FooterLine() {
         }
       </div>
       <div>
-        <button className='clean-button' onClick={handlerClearAllCompletedToDos}>Clear completed</button>
+        <button className='clean-button' onClick={handlerClearAllCompletedToDos}>Очистить выполненное</button>
       </div>
     </FooterLineBody>
   )
