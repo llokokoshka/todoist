@@ -6,7 +6,7 @@ export default function App() {
   return (
     <PageWrapper>
       <h1 className='title' >
-        todos
+        Список задач
       </h1>
       <ContainerOfToDos />
     </PageWrapper>
