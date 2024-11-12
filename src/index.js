@@ -7,7 +7,7 @@ import GlobalStyles from './styles/global'
 import { ThemeProvider } from 'styled-components';
 import { baseTheme } from './styles/theme';
 
-// import reportWebVitals from './reportWebVitals';
+import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,4 +22,4 @@ root.render(
   </React.StrictMode>
 );
 
-// reportWebVitals();
+reportWebVitals();
